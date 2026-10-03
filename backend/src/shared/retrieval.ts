@@ -1,5 +1,6 @@
 import { VectorStoreRetriever } from '@langchain/core/vectorstores';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { OllamaEmbeddings } from '@langchain/ollama';
+/*import { OpenAIEmbeddings } from '@langchain/openai';*/
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
 import { createClient } from '@supabase/supabase-js';
 import { RunnableConfig } from '@langchain/core/runnables';
@@ -16,8 +17,10 @@ export async function makeSupabaseRetriever(
       'SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables are not defined',
     );
   }
-  const embeddings = new OpenAIEmbeddings({
-    model: 'text-embedding-3-small',
+  /*const embeddings = new OpenAIEmbeddings({*/
+  const embeddings = new OllamaEmbeddings({
+    model: 'nomic-embed-text',
+    /*model: 'text-embedding-3-small',*/
   });
   const supabaseClient = createClient(
     process.env.SUPABASE_URL ?? '',

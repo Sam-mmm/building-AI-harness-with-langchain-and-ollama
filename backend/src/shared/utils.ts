@@ -1,7 +1,36 @@
 import { BaseChatModel } from '@langchain/core/language_models/chat_models';
-import { initChatModel } from 'langchain/chat_models/universal';
+/*import { initChatModel } from 'langchain/chat_models/universal';*/
+import { ChatOllama } from "@langchain/ollama";
 
-const SUPPORTED_PROVIDERS = [
+export async function loadChatModel(
+  /*modelName: string = process.env.MODEL_NAME || "qwen2.5:7b",*/
+  modelName: string = process.env.MODEL_NAME || "qwen2.5:7b",
+  temperature: number = 0
+): Promise<BaseChatModel> {
+  const baseUrl = process.env.OLLAMA_BASE_URL || "http://127.0.0.1:11434";
+
+  return new ChatOllama({
+    model: modelName,
+    baseUrl: baseUrl,
+    temperature: temperature,
+  });
+}
+
+/*export async function getModel(
+  modelName: string = process.env.MODEL_NAME || "qwen2.5:7b",
+  temperature: number = 0.7
+): Promise<BaseChatModel> {
+  // Determine if we are connecting via Docker network or localhost
+  const baseUrl = process.env.OLLAMA_BASE_URL || "http://127.0.0.1:11434";
+
+  return await initChatModel(modelName, {
+    modelProvider: "ollama",
+    baseUrl: baseUrl,
+    temperature: temperature,
+  });
+}*/
+
+/*const SUPPORTED_PROVIDERS = [
   'openai',
   'anthropic',
   'azure_openai',
@@ -24,7 +53,7 @@ const SUPPORTED_PROVIDERS = [
  * @param fullySpecifiedName - String in the format 'provider/model' or 'provider/account/provider/model'.
  * @returns A Promise that resolves to a BaseChatModel instance.
  */
-export async function loadChatModel(
+/*export async function loadChatModel(
   fullySpecifiedName: string,
   temperature: number = 0.2,
 ): Promise<BaseChatModel> {
@@ -57,3 +86,4 @@ export async function loadChatModel(
     });
   }
 }
+*/

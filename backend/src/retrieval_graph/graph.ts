@@ -3,6 +3,7 @@ import { AgentStateAnnotation } from './state.js';
 import { makeRetriever } from '../shared/retrieval.js';
 import { formatDocs } from './utils.js';
 import { HumanMessage } from '@langchain/core/messages';
+import { ChatOllama } from "@langchain/ollama";
 import { z } from 'zod';
 import { RESPONSE_SYSTEM_PROMPT, ROUTER_SYSTEM_PROMPT } from './prompts.js';
 import { RunnableConfig } from '@langchain/core/runnables';
@@ -33,6 +34,13 @@ async function checkQueryType(
     query: state.query,
   });
 
+  /*const structuredModel = model.withStructuredOutput.bind(model)(schema);
+  const structuredModel = model.withStructuredOutput(schema);
+  const response = await structuredModel.invoke(formattedPrompt.toString());
+  const response = await model
+    .withStructuredOutput.bind(model)(schema)
+    .invoke(formattedPrompt.toString());*/
+
   const response = await model
     .withStructuredOutput(schema)
     .invoke(formattedPrompt.toString());
@@ -41,7 +49,6 @@ async function checkQueryType(
 
   return { route };
 }
-
 async function answerQueryDirectly(
   state: typeof AgentStateAnnotation.State,
   config: RunnableConfig,

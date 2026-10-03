@@ -5,7 +5,8 @@ import { graph } from '../../src/retrieval_graph/graph.js';
 import { Document } from '@langchain/core/documents';
 import { HumanMessage } from '@langchain/core/messages';
 import { SupabaseVectorStore } from '@langchain/community/vectorstores/supabase';
-import { OpenAIEmbeddings } from '@langchain/openai';
+/*import { OpenAIEmbeddings } from '@langchain/openai';*/
+import { OllmaEmbeddings } from '@langchain/ollama';
 import { createClient } from '@supabase/supabase-js';
 
 /**
@@ -26,7 +27,7 @@ describe('Retrieval Graph Integration', () => {
   beforeAll(async () => {
     // Check for required environment variables
     const requiredEnvVars = {
-      OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+      /*OPENAI_API_KEY: process.env.OPENAI_API_KEY,*/
       SUPABASE_URL: process.env.SUPABASE_URL,
       SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
     };
@@ -41,7 +42,7 @@ describe('Retrieval Graph Integration', () => {
       console.error(
         '\nPlease create a .env file with the following variables:',
       );
-      console.error('OPENAI_API_KEY=your_openai_api_key');
+      /*console.error('OPENAI_API_KEY=your_openai_api_key');*/
       console.error('SUPABASE_URL=your_supabase_url');
       console.error(
         'SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key\n',
@@ -51,8 +52,11 @@ describe('Retrieval Graph Integration', () => {
 
     try {
       // Setup test documents in Supabase
-      const embeddings = new OpenAIEmbeddings({
-        model: 'text-embedding-3-small',
+      /*const embeddings = new OpenAIEmbeddings({*/
+      const embeddings = new OllmaEmbeddings({
+        /*model: 'text-embedding-3-small',*/
+        model: 'nomic-embed-text',
+        baseUrl: process.env.OLLAMA_BASE_URL || "http://127.0.0.1:11434",
       });
 
       const supabaseClient = createClient(
@@ -102,7 +106,7 @@ describe('Retrieval Graph Integration', () => {
       console.error('\nPlease ensure:');
       console.error('1. Your Supabase credentials are correct');
       console.error('2. The documents table exists with the correct schema');
-      console.error('3. Your OpenAI API key is valid\n');
+      /*console.error('3. Your OpenAI API key is valid\n');*/
       throw error; // Rethrow to fail the test suite if setup fails
     }
   }, 30000); // Increased timeout to 30 seconds
@@ -135,7 +139,7 @@ describe('Retrieval Graph Integration', () => {
     const hasEnvVars =
       process.env.SUPABASE_URL &&
       process.env.SUPABASE_SERVICE_ROLE_KEY &&
-      process.env.OPENAI_API_KEY;
+      /*process.env.OPENAI_API_KEY;*/
     if (!hasEnvVars) {
       console.warn('Skipping tests due to missing environment variables');
     }

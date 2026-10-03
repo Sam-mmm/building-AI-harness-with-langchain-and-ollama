@@ -9,7 +9,7 @@ const EXAMPLE_PROMPTS = [
     title: "What is this document about?",
   },
   {
-    title: "What is music?",
+    title: "What is key words?",
   },
 ]
 
