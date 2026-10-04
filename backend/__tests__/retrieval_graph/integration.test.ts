@@ -135,11 +135,12 @@ describe('Retrieval Graph Integration', () => {
   });
 
   // Skip all tests if environment variables are missing
-  const shouldRunTests = () => {
-    const hasEnvVars =
+  const shouldRunTests = (): boolean => {
+    const hasEnvVars = Boolean(
       process.env.SUPABASE_URL &&
       process.env.SUPABASE_SERVICE_ROLE_KEY &&
       /*process.env.OPENAI_API_KEY;*/
+    );
     if (!hasEnvVars) {
       console.warn('Skipping tests due to missing environment variables');
     }
