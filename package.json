@@ -2,11 +2,13 @@
   "name": "ai-pdf-chatbot-langchain-ollama",
   "description": "leveraging ollama open source LLM and basing on Mayo Oshin from MIT' frame",
   "private": true,
+  "packageManager": "yarn@1.22.22",
   "version": "0.0.1",
   "author": "Zhao Xuesong",
   "license": "geek-hub",
   "workspaces": [
     "backend",
+    "apps/*",
     "frontend"
   ],
   "scripts": {
