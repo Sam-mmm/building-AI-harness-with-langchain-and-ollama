@@ -138,7 +138,7 @@ describe('Retrieval Graph Integration', () => {
   const shouldRunTests = (): boolean => {
     const hasEnvVars = Boolean(
       process.env.SUPABASE_URL &&
-      process.env.SUPABASE_SERVICE_ROLE_KEY &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY
       /*process.env.OPENAI_API_KEY;*/
     );
     if (!hasEnvVars) {
